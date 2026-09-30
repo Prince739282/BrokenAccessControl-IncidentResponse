@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/user.model.js";
-constverifyJWT = async (req,res,next)=>{
+const verifyJWT = async (req,res,next)=>{
        try {
         const token = req.headers.authorization?.split(" ")[1];
 
@@ -24,3 +24,5 @@ constverifyJWT = async (req,res,next)=>{
         });
        } 
 }
+
+export {verifyJWT};
