@@ -5,6 +5,7 @@ import connectDB from "./db/db.js";
 import authRouter from "./routes/auth.routes.js";
 import adminRouter from "./routes/admin.routes.js";
 import userRouter from "./routes/user.routes.js";
+import { errorHandler } from "./middlewares/error.middleware.js";
 
 dotenv.config({
   path: "./.env",
@@ -17,6 +18,7 @@ app.use(express.json);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/admin", adminRouter);
 app.use("/api/v1/users", userRouter);
+app.use(errorHandler);
 
 const port = process.env.PORT || 3000;
 
