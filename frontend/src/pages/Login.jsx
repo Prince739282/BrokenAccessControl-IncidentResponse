@@ -30,8 +30,14 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div
+      style={{
+        width: "350px",
+        margin: "80px auto",
+        fontFamily: "Arial",
+      }}
+    >
+      <h2>Login</h2>
 
       <form onSubmit={handleLogin}>
         <input
@@ -39,6 +45,12 @@ const Login = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "12px",
+            boxSizing: "border-box",
+          }}
         />
 
         <input
@@ -46,6 +58,12 @@ const Login = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "15px",
+            boxSizing: "border-box",
+          }}
         />
 
         <button type="submit">Login</button>

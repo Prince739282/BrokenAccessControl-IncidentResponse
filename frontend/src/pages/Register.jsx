@@ -37,8 +37,14 @@ const Register = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
+    <div
+      style={{
+        width: "350px",
+        margin: "80px auto",
+        fontFamily: "Arial",
+      }}
+    >
+      <h2>Register</h2>
 
       <form onSubmit={handleRegister}>
         <input
@@ -46,6 +52,12 @@ const Register = () => {
           placeholder="Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "12px",
+            boxSizing: "border-box",
+          }}
         />
 
         <input
@@ -53,6 +65,12 @@ const Register = () => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "12px",
+            boxSizing: "border-box",
+          }}
         />
 
         <input
@@ -60,6 +78,12 @@ const Register = () => {
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          style={{
+            width: "100%",
+            padding: "10px",
+            marginBottom: "15px",
+            boxSizing: "border-box",
+          }}
         />
 
         <button type="submit">Register</button>
