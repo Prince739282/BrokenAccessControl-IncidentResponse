@@ -26,7 +26,13 @@ const Register = () => {
         navigate("/login");
       }, 1000);
     } catch (error) {
-      setMessage(error.response?.data?.message || "Registration failed");
+      console.log("Register error:", error.response?.data);
+
+      setMessage(
+        error.response?.data?.errors?.[0]?.msg ||
+          error.response?.data?.message ||
+          error.message,
+      );
     }
   };
 

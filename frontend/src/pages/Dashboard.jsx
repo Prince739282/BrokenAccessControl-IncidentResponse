@@ -36,8 +36,8 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <h1>Dashboard</h1>
+    <div style={{ padding: "40px" }}>
+      <h1>Security Dashboard</h1>
 
       {user && (
         <div>
@@ -47,7 +47,20 @@ const Dashboard = () => {
         </div>
       )}
 
-      <button onClick={handleLogout}>Logout</button>
+      <div style={{ marginTop: "30px" }}>
+        <button onClick={() => navigate("/profile")}>User Profile</button>
+
+        <button
+          onClick={() => navigate("/admin")}
+          style={{ marginLeft: "10px" }}
+        >
+          Admin Dashboard
+        </button>
+
+        <button onClick={handleLogout} style={{ marginLeft: "10px" }}>
+          Logout
+        </button>
+      </div>
     </div>
   );
 };
