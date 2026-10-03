@@ -1,6 +1,7 @@
 import { Router } from "express";
 import User from "../models/user.model.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
+import Incident from "../models/incident.model.js";
 
 const router = Router();
 
@@ -10,6 +11,13 @@ router.get("/:id", verifyJWT, async (req, res) => {
       req.user.role !== "admin" &&
       req.params.id !== req.user._id.toString()
     ) {
+      await Incident.create({
+        user: req.user._id,
+        targetUser: req.params.id,
+        action: "Unauthorized access attempt",
+        status: "Blocked",
+      });
+
       return res.status(403).json({
         message: "Access denied",
       });
