@@ -61,9 +61,29 @@ const AdminDashboard = () => {
     <div>
       <h1>Admin Dashboard</h1>
 
-      <p>{message}</p>
+      <h2>Security Incidents</h2>
 
-      <button onClick={() => navigate("/dashboard")}>Back to Dashboard</button>
+      {message && <p>{message}</p>}
+
+      {incidents.length === 0 ? (
+        <p>No incidents found.</p>
+      ) : (
+        incidents.map((incident) => (
+          <div key={incident._id}>
+            <p>User: {incident.user?.name || "Unknown"}</p>
+
+            <p>Email: {incident.user?.email || "Unknown"}</p>
+
+            <p>Target User ID: {incident.targetUser}</p>
+
+            <p>Action: {incident.action}</p>
+
+            <p>Status: {incident.status}</p>
+
+            <hr />
+          </div>
+        ))
+      )}
     </div>
   );
 };
