@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 const AdminDashboard = () => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
+  const [incidents, setIncidents] = useState([]);
 
   useEffect(() => {
     const getAdminDashboard = async () => {
@@ -31,6 +32,29 @@ const AdminDashboard = () => {
     };
 
     getAdminDashboard();
+  }, []);
+
+  useEffect(() => {
+    const getIncidents = async () => {
+      try {
+        const token = localStorage.getItem("accessToken");
+
+        const response = await axios.get(
+          "http://localhost:8000/api/v1/users/incidents/all",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        setIncidents(response.data.incidents);
+      } catch (error) {
+        setMessage(error.response?.data?.message || "Unable to load incidents");
+      }
+    };
+
+    getIncidents();
   }, []);
 
   return (
