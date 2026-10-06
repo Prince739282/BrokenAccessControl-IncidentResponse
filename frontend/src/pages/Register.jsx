@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom"; 
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -29,71 +28,140 @@ const Register = () => {
     } catch (error) {
       console.log("Register error:", error.response?.data);
 
-      setMessage(
-        error.response?.data?.errors?.[0]?.msg ||
-          error.response?.data?.message ||
-          error.message,
-      );
+      setMessage(error.response?.data?.message || "Registration failed");
     }
   };
 
   return (
     <div
       style={{
-        width: "350px",
-        margin: "80px auto",
-        fontFamily: "Arial",
+        minHeight: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#f4f6f8",
+        fontFamily: "Arial, sans-serif",
       }}
     >
-      <h2>Register</h2>
-
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+      <div
+        style={{
+          width: "350px",
+          padding: "30px",
+          backgroundColor: "white",
+          border: "1px solid #ddd",
+          borderRadius: "8px",
+          boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
+        }}
+      >
+        <h2
           style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "12px",
-            boxSizing: "border-box",
+            textAlign: "center",
+            marginBottom: "25px",
           }}
-        />
+        >
+          Create Account
+        </h2>
 
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+        <form onSubmit={handleRegister}>
+          <label>Name</label>
+
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginTop: "6px",
+              marginBottom: "15px",
+              boxSizing: "border-box",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
+          />
+
+          <label>Email</label>
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginTop: "6px",
+              marginBottom: "15px",
+              boxSizing: "border-box",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
+          />
+
+          <label>Password</label>
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Minimum 8 characters"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            minLength={8}
+            style={{
+              width: "100%",
+              padding: "10px",
+              marginTop: "6px",
+              marginBottom: "18px",
+              boxSizing: "border-box",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
+          />
+
+          <button
+            type="submit"
+            style={{
+              width: "100%",
+              padding: "11px",
+              border: "none",
+              borderRadius: "5px",
+              backgroundColor: "#2563eb",
+              color: "white",
+              fontSize: "16px",
+              cursor: "pointer",
+            }}
+          >
+            Register
+          </button>
+        </form>
+
+        {message && (
+          <p
+            style={{
+              textAlign: "center",
+              marginTop: "15px",
+              color: message === "Registration successful" ? "green" : "red",
+            }}
+          >
+            {message}
+          </p>
+        )}
+
+        <p
           style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "12px",
-            boxSizing: "border-box",
+            textAlign: "center",
+            marginTop: "20px",
           }}
-        />
-
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            width: "100%",
-            padding: "10px",
-            marginBottom: "15px",
-            boxSizing: "border-box",
-          }}
-        />
-
-        <button type="submit">Register</button>
-        <p>
+        >
           Already have an account? <Link to="/login">Login</Link>
         </p>
-      </form>
-
-      {message && <p>{message}</p>}
+      </div>
     </div>
   );
 };
