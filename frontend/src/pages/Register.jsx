@@ -14,11 +14,14 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      await axios.post("http://localhost:8000/api/v1/auth/register", {
-        name,
-        email,
-        password,
-      });
+      await axios.post(
+        `${import.meta.env.VITE_API_URL || "https://broken-access-control-api.onrender.com"}/api/v1/auth/register`,
+        {
+          name,
+          email,
+          password,
+        },
+      );
 
       setMessage("Registration successful");
 
@@ -26,25 +29,27 @@ const Register = () => {
         navigate("/login");
       }, 1000);
     } catch (error) {
-      console.log("Register error:", error.response?.data);
+      console.error("Register error:", error.response?.data || error.message);
 
-      setMessage(error.response?.data?.message || "Registration failed");
+      setMessage(
+        error.response?.data?.message || "Registration failed",
+      );
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4 py-8">
       <div className="w-full max-w-md bg-white rounded-xl shadow-md border border-gray-200 p-8">
-        {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-800">Create Account</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Create Account
+          </h1>
 
           <p className="text-sm text-gray-500 mt-2">
             Register to access the security portal
           </p>
         </div>
 
-        {/* Register Form */}
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -107,7 +112,6 @@ const Register = () => {
           </button>
         </form>
 
-        {/* Message */}
         {message && (
           <p
             className={`mt-4 text-center text-sm ${
@@ -120,7 +124,6 @@ const Register = () => {
           </p>
         )}
 
-        {/* Login Link */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Already have an account?{" "}
           <Link

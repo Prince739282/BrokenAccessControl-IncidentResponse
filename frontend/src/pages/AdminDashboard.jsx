@@ -10,8 +10,13 @@ const AdminDashboard = () => {
       try {
         const token = localStorage.getItem("accessToken");
 
+        if (!token) {
+          setMessage("Please log in to access security incidents.");
+          return;
+        }
+
         const response = await axios.get(
-          "http://localhost:8000/api/v1/users/incidents/all",
+          `${import.meta.env.VITE_API_URL || "https://broken-access-control-api.onrender.com"}/api/v1/users/incidents/all`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -22,7 +27,8 @@ const AdminDashboard = () => {
         setIncidents(response.data.incidents);
       } catch (error) {
         setMessage(
-          error.response?.data?.message || "Unable to load security incidents",
+          error.response?.data?.message ||
+            "Unable to load security incidents",
         );
       }
     };
@@ -72,7 +78,9 @@ const AdminDashboard = () => {
 
           {incidents.length === 0 ? (
             <div className="p-8 text-center">
-              <p className="text-gray-500">No security incidents found.</p>
+              <p className="text-gray-500">
+                {message ? "Unable to display incidents." : "No security incidents found."}
+              </p>
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
@@ -106,7 +114,6 @@ const AdminDashboard = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div>
                       <p className="text-sm text-gray-500">User</p>
-
                       <p className="text-gray-800 font-medium mt-1">
                         {incident.user?.name || "Unknown"}
                       </p>
@@ -114,7 +121,6 @@ const AdminDashboard = () => {
 
                     <div>
                       <p className="text-sm text-gray-500">Email</p>
-
                       <p className="text-gray-800 font-medium mt-1 break-all">
                         {incident.user?.email || "Unknown"}
                       </p>
@@ -122,7 +128,6 @@ const AdminDashboard = () => {
 
                     <div>
                       <p className="text-sm text-gray-500">Target User ID</p>
-
                       <p className="text-gray-800 font-medium mt-1 break-all">
                         {incident.targetUser}
                       </p>
@@ -130,7 +135,6 @@ const AdminDashboard = () => {
 
                     <div>
                       <p className="text-sm text-gray-500">Action</p>
-
                       <p className="text-gray-800 font-medium mt-1">
                         {incident.action}
                       </p>

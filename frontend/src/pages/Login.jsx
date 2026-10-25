@@ -14,7 +14,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/v1/auth/login",
+        `${import.meta.env.VITE_API_URL || "https://broken-access-control-api.onrender.com"}/api/v1/auth/login`,
         {
           email,
           password,
@@ -32,16 +32,16 @@ const Login = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-md border border-gray-200 p-8">
-        {/* Header */}
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-800">Security Portal</h1>
+          <h1 className="text-2xl font-bold text-gray-800">
+            Security Portal
+          </h1>
 
           <p className="text-sm text-gray-500 mt-2">
             Login to access your account
           </p>
         </div>
 
-        {/* Login Form */}
         <form onSubmit={handleLogin} className="space-y-5">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -83,12 +83,10 @@ const Login = () => {
           </button>
         </form>
 
-        {/* Error Message */}
         {message && (
           <p className="mt-4 text-center text-sm text-red-600">{message}</p>
         )}
 
-        {/* Register Link */}
         <p className="text-center text-sm text-gray-600 mt-6">
           Don't have an account?{" "}
           <Link

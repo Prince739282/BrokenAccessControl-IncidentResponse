@@ -10,8 +10,14 @@ const UserProfile = () => {
     try {
       const token = localStorage.getItem("accessToken");
 
+      if (!token) {
+        setUser(null);
+        setMessage("Please log in to access user information.");
+        return;
+      }
+
       const response = await axios.get(
-        `http://localhost:8000/api/v1/users/${userId}`,
+        `${import.meta.env.VITE_API_URL || "https://broken-access-control-api.onrender.com"}/api/v1/users/${userId.trim()}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -23,22 +29,21 @@ const UserProfile = () => {
       setMessage("");
     } catch (error) {
       setUser(null);
-      setMessage(error.response?.data?.message || "Access denied");
+      setMessage(
+        error.response?.data?.message || "Access denied",
+      );
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Header */}
       <nav className="bg-gray-900 text-white px-6 py-4">
         <div className="max-w-5xl mx-auto">
           <h1 className="text-xl font-semibold">User Profile</h1>
         </div>
       </nav>
 
-      {/* Main Content */}
       <main className="max-w-3xl mx-auto px-6 py-10">
-        {/* Search Card */}
         <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
           <h2 className="text-xl font-semibold text-gray-800">
             View User Information
@@ -70,7 +75,6 @@ const UserProfile = () => {
             </button>
           </div>
 
-          {/* Error Message */}
           {message && (
             <div className="mt-5 p-4 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-sm text-red-700">{message}</p>
@@ -78,7 +82,6 @@ const UserProfile = () => {
           )}
         </div>
 
-        {/* User Information */}
         {user && (
           <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-6 mt-6">
             <div className="flex items-center justify-between mb-6">
@@ -100,26 +103,28 @@ const UserProfile = () => {
             <div className="space-y-4">
               <div className="border-b border-gray-100 pb-3">
                 <p className="text-sm text-gray-500">Name</p>
-
-                <p className="text-gray-800 font-medium mt-1">{user.name}</p>
+                <p className="text-gray-800 font-medium mt-1">
+                  {user.name}
+                </p>
               </div>
 
               <div className="border-b border-gray-100 pb-3">
                 <p className="text-sm text-gray-500">Email</p>
-
-                <p className="text-gray-800 font-medium mt-1">{user.email}</p>
+                <p className="text-gray-800 font-medium mt-1">
+                  {user.email}
+                </p>
               </div>
 
               <div>
                 <p className="text-sm text-gray-500">Role</p>
-
-                <p className="text-gray-800 font-medium mt-1">{user.role}</p>
+                <p className="text-gray-800 font-medium mt-1">
+                  {user.role}
+                </p>
               </div>
             </div>
           </div>
         )}
 
-        {/* Security Information */}
         <div className="mt-6 p-5 bg-blue-50 border border-blue-200 rounded-xl">
           <h3 className="text-sm font-semibold text-blue-800">
             Access Control
